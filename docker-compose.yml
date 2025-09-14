@@ -1,0 +1,57 @@
+services:
+  mem0_store:
+    image: qdrant/qdrant
+    ports:
+      - "6333:6333"
+    volumes:
+      - mem0_storage:/mem0/storage
+  openmemory-mcp:
+    image: mem0/openmemory-mcp
+    build: api/
+    environment:
+      - USER
+      # OpenAI Configuration
+      - OPENAI_API_KEY
+      # Anthropic Configuration
+      - ANTHROPIC_API_KEY
+      # Together AI Configuration
+      - TOGETHER_API_KEY
+      # Groq Configuration
+      - GROQ_API_KEY
+      # Mistral Configuration
+      - MISTRAL_API_KEY
+      # Google Configuration
+      - GOOGLE_API_KEY
+      # DeepSeek Configuration
+      - DEEPSEEK_API_KEY
+      # xAI Configuration
+      - XAI_API_KEY
+      # LiteLLM Configuration
+      - LITELLM_API_KEY
+      # LangChain Configuration
+      - LANGCHAIN_API_KEY
+      # Ollama Configuration (for Docker host resolution)
+      - OLLAMA_HOST
+    env_file:
+      - api/.env
+    depends_on:
+      - mem0_store
+    ports:
+      - "8765:8765"
+    volumes:
+      - ./api:/usr/src/openmemory
+    command: >
+      sh -c "uvicorn main:app --host 0.0.0.0 --port 8765 --reload --workers 4"
+  openmemory-ui:
+    build:
+      context: ui/
+      dockerfile: Dockerfile
+    image: mem0/openmemory-ui:latest
+    ports:
+      - "3030:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://192.168.0.33:8765
+      - NEXT_PUBLIC_USER_ID=${USER}
+
+volumes:
+  mem0_storage:
