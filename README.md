@@ -1,6 +1,13 @@
-# OpenMemory
+# OpenMemory Multi-Provider
 
-OpenMemory is your personal memory layer for LLMs - private, portable, and open-source. Your memories live locally, giving you complete control over your data. Build AI applications with personalized memories while keeping your data secure.
+OpenMemory Multi-Provider is an enhanced version of OpenMemory - your personal memory layer for LLMs with support for multiple AI model providers. This version is private, portable, and open-source, giving you complete control over your data while supporting various AI providers. Build AI applications with personalized memories while keeping your data secure.
+
+## 🆕 New Features
+
+- **Multi-Provider Support**: Choose from multiple AI model providers including OpenAI, Anthropic, Together AI, Groq, Mistral, Google, DeepSeek, xAI, LiteLLM, and LangChain
+- **Flexible Configuration**: Easy switching between different AI providers without code changes
+- **Ollama Integration**: Support for local Ollama models for complete privacy
+- **Enhanced Provider Management**: Simplified configuration and management of different AI providers
 
 ![OpenMemory](https://github.com/user-attachments/assets/3c701757-ad82-4afa-bfbe-e049c2b4320b)
 
@@ -8,7 +15,7 @@ OpenMemory is your personal memory layer for LLMs - private, portable, and open-
 
 ### Prerequisites
 - Docker
-- OpenAI API Key
+- At least one AI provider API key (OpenAI, Anthropic, Together AI, Groq, Mistral, Google, DeepSeek, xAI, LiteLLM, or LangChain)
 
 You can quickly run OpenMemory by running the following command:
 
@@ -16,13 +23,19 @@ You can quickly run OpenMemory by running the following command:
 curl -sL https://raw.githubusercontent.com/mem0ai/mem0/main/openmemory/run.sh | bash
 ```
 
-You should set the `OPENAI_API_KEY` as a global environment variable:
+You should set your preferred AI provider API key as a global environment variable:
 
 ```bash
-export OPENAI_API_KEY=your_api_key
+# For OpenAI
+export OPENAI_API_KEY=your_openai_api_key
+
+# For Anthropic
+export ANTHROPIC_API_KEY=your_anthropic_api_key
+
+# For other providers, see the configuration section below
 ```
 
-You can also set the `OPENAI_API_KEY` as a parameter to the script:
+You can also set the API key as a parameter to the script:
 
 ```bash
 curl -sL https://raw.githubusercontent.com/mem0ai/mem0/main/openmemory/run.sh | OPENAI_API_KEY=your_api_key bash
@@ -33,7 +46,7 @@ curl -sL https://raw.githubusercontent.com/mem0ai/mem0/main/openmemory/run.sh | 
 - Docker and Docker Compose
 - Python 3.9+ (for backend development)
 - Node.js (for frontend development)
-- OpenAI API Key (required for LLM interactions, run `cp api/.env.example api/.env` then change **OPENAI_API_KEY** to yours)
+- At least one AI provider API key (required for LLM interactions, run `cp api/.env.example api/.env` then configure your preferred provider)
 
 ## Quickstart
 
@@ -65,7 +78,18 @@ You can do this in one of the following ways:
 - #### Example `/api/.env`
 
 ```env
+# Choose one or more AI providers
 OPENAI_API_KEY=sk-xxx
+# ANTHROPIC_API_KEY=your_anthropic_key
+# TOGETHER_API_KEY=your_together_key
+# GROQ_API_KEY=your_groq_key
+# MISTRAL_API_KEY=your_mistral_key
+# GOOGLE_API_KEY=your_google_key
+# DEEPSEEK_API_KEY=your_deepseek_key
+# XAI_API_KEY=your_xai_key
+# LITELLM_API_KEY=your_litellm_key
+# LANGCHAIN_API_KEY=your_langchain_key
+
 USER=<user-id> # The User Id you want to associate the memories with 
 ```
 - #### Example `/ui/.env`
@@ -95,6 +119,30 @@ cd ui
 pnpm install
 pnpm dev
 ```
+
+## AI Provider Configuration
+
+This version supports multiple AI providers. You can configure one or more providers in your `/api/.env` file:
+
+### Supported Providers
+
+| Provider | Environment Variable | Example |
+|----------|---------------------|---------|
+| OpenAI | `OPENAI_API_KEY` | `sk-...` |
+| Anthropic | `ANTHROPIC_API_KEY` | `sk-ant-...` |
+| Together AI | `TOGETHER_API_KEY` | `...` |
+| Groq | `GROQ_API_KEY` | `gsk_...` |
+| Mistral | `MISTRAL_API_KEY` | `...` |
+| Google | `GOOGLE_API_KEY` | `...` |
+| DeepSeek | `DEEPSEEK_API_KEY` | `...` |
+| xAI | `XAI_API_KEY` | `...` |
+| LiteLLM | `LITELLM_API_KEY` | `...` |
+| LangChain | `LANGCHAIN_API_KEY` | `...` |
+| Ollama | `OLLAMA_HOST` | `http://localhost:11434` |
+
+### Provider Selection
+
+The system will automatically use the first available provider from your configuration. You can also specify the provider in your configuration files.
 
 ### MCP Client Setup
 
@@ -132,3 +180,17 @@ How to contribute:
 5. Open a Pull Request
 
 Join us in building the future of AI memory management! Your contributions help make OpenMemory better for everyone.
+
+## License
+
+This project is licensed under the Apache License 2.0. This is a modified version of the original OpenMemory project with enhanced multi-provider support.
+
+### Original Project
+This project is based on the original [OpenMemory](https://github.com/mem0ai/mem0) project, which has been enhanced with multi-provider support and additional features.
+
+### License Details
+- **License**: Apache License 2.0
+- **Modifications**: This version includes significant modifications and enhancements by the maintainer
+- **Attribution**: Based on the original OpenMemory project by mem0ai
+
+For the full license text, see the [LICENSE](LICENSE) file in this repository.

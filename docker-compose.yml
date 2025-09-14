@@ -1,3 +1,5 @@
+# OpenMemory Multi-Provider Docker Compose Configuration
+# This configuration supports multiple AI providers including OpenAI, Anthropic, Together AI, Groq, Mistral, Google, DeepSeek, xAI, LiteLLM, LangChain, and Ollama
 services:
   mem0_store:
     image: qdrant/qdrant
@@ -50,7 +52,7 @@ services:
     ports:
       - "3030:3000"
     environment:
-      - NEXT_PUBLIC_API_URL=http://192.168.0.33:8765
+      - NEXT_PUBLIC_API_URL=http://localhost:8765
       - NEXT_PUBLIC_USER_ID=${USER}
 
 volumes:
