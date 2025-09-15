@@ -313,7 +313,7 @@ def get_default_memory_config():
             "dbname": os.environ.get('PG_DB', 'mem0'),
             "user": os.environ.get('PG_USER', 'mem0'),
             "password": os.environ.get('PG_PASSWORD', 'mem0'),
-            "embedding_model_dims": 768  # BGE model dimensions
+            "embedding_model_dims": 1536  # OpenAI text-embedding-3-small dimensions
         })
     elif os.environ.get('MILVUS_HOST') and os.environ.get('MILVUS_PORT'):
         vector_store_provider = "milvus"
@@ -366,7 +366,7 @@ def get_default_memory_config():
         vector_store_provider = "qdrant"
         vector_store_config.update({
             "port": 6333,
-            "embedding_model_dims": 768  # BGE model dimensions
+            "embedding_model_dims": 1536  # OpenAI text-embedding-3-small dimensions
         })
     
     print(f"Auto-detected vector store: {vector_store_provider} with config: {vector_store_config}")
